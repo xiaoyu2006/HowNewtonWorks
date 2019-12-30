@@ -7,6 +7,8 @@
 #include <cmath>
 // memset
 #include <cstring>
+// qDebug
+#include <QDebug>
 
 struct Point {
     double x, y;
@@ -112,9 +114,11 @@ private:
     }
 
     void updatePos(double time) {
-        for(Partical it : this->particals) {
-            it.pos.x += it.d.x*time;
-            it.pos.y += it.d.y*time;
+        const int len = this->getLen();
+
+        for(int i=0; i<len; i++) {
+            (this->particals)[i].pos.x += (this->particals)[i].d.x*time;
+            (this->particals)[i].pos.y += (this->particals)[i].d.y*time;
         }
     }
 };

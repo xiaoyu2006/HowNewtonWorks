@@ -1,14 +1,40 @@
 #include "visglwidget.h"
 
+#include <cstdlib>
+#include <ctime>
+
+int randInt(int from, int to) {
+    return from+rand()%(from-to);
+}
+
 VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data)
     : QOpenGLWidget(parent)
 {
+    if(data == nullptr)return;
+    srand(time(NULL));
     this->data = data;
+    const int len = this->data->getLen();
+    for(int _=0; _<len; _++) {
+        this->colors.push_back(QColor(
+            randInt(0,200), randInt(0,200), randInt(0,200), randInt(200,255)
+        ));
+    }
 }
 
 void VisGLWidget::setData(NewtonSpace *data)
 {
     this->data = data;
+    if(data == nullptr)return;
+
+    srand(time(NULL));
+    this->data = data;
+    const int len = this->data->getLen();
+    this->colors.clear();
+    for(int _=0; _<len; _++) {
+        this->colors.push_back(QColor(
+            randInt(0,200), randInt(0,200), randInt(0,200), randInt(200,255)
+        ));
+    }
 }
 
 void VisGLWidget::setG(double G)
@@ -21,16 +47,40 @@ void VisGLWidget::setTime(double time)
     this->step = time;
 }
 
+void VisGLWidget::update()
+{
+    this->initializeGL();
+    this->paintGL();
+}
+
 void VisGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    glClearColor(255,255,255,0);
+    glClearColor(255,255,255,255);
 }
 
 void VisGLWidget::resizeGL(int width, int height)
 {
+    // won't be resized
+    return;
 }
 
 void VisGLWidget::paintGL()
 {
+    this->data->update(this->G, this->step);
+
+    const int len = this->data->getLen();
+
+    QPainter painter;
+    painter.begin(this);
+
+    for (int i=0; i<len; i++) {
+        Point pos = (this->data->particals)[i].pos;
+        QColor color = (this->colors)[i];
+        painter.setPen(QPen(color, 20));
+        painter.setBrush(QBrush(color));
+        painter.drawPoint(pos.x, pos.y);
+    }
+
+    painter.end();
 }

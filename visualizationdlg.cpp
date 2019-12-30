@@ -7,7 +7,10 @@ VisualizationDlg::VisualizationDlg(QWidget *parent, NewtonSpace *data) :
 {
     ui->setupUi(this);
     this->data = data;
+    // for the missing piece...
     ui->visualizationGL->setData(this->data);
+    ui->visualizationGL->setTime(.0001);
+    ui->visualizationGL->setG(.1);
 }
 
 VisualizationDlg::~VisualizationDlg()

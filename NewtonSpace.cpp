@@ -35,22 +35,20 @@ struct Partical {
 
 class NewtonSpace {
 public:
-    std::vector<Partical> *particals;
+    std::vector<Partical> particals;
 
     NewtonSpace() {
-        this->particals = new std::vector<Partical>;
     }
 
     ~NewtonSpace() {
-        delete this->particals;
     }
 
     void addPartical(Partical p) {
-        this->particals->push_back(p);
+        this->particals.push_back(p);
     }
 
     int getLen() {
-        return this->particals->size();
+        return this->particals.size();
     }
 
     void update(double G, double time) {
@@ -59,13 +57,13 @@ public:
     }
 
     std::vector<Partical> getParticals() {
-        return *this->particals;
+        return this->particals;
     }
 
 private:
     // Main part!
     void updateSpd(double G, double time) {
-        int len = this->getLen();
+        const int len = this->getLen();
 
         // distances
         double dist[len][len];
@@ -83,8 +81,8 @@ private:
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
                 dist[i][j] = sqrt(
-                    pow(((*this->particals)[i].pos.x - (*this->particals)[j].pos.x),2.) +
-                    pow(((*this->particals)[i].pos.y - (*this->particals)[j].pos.y),2.)
+                    pow(((this->particals)[i].pos.x - (this->particals)[j].pos.x),2.) +
+                    pow(((this->particals)[i].pos.y - (this->particals)[j].pos.y),2.)
                 );
             }
         }
@@ -93,7 +91,7 @@ private:
         for(int i=0; i<len; i++) {
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
-                a[i][j] = G*(*this->particals)[i].mass/dist[i][j];
+                a[i][j] = G*(this->particals)[i].mass/dist[i][j];
             }
         }
 
@@ -101,20 +99,20 @@ private:
         for(int i=0; i<len; i++) {
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
-                d2x[i] += a[i][j]*((*this->particals)[i].pos.x - (*this->particals)[j].pos.x);
-                d2y[i] += a[i][j]*((*this->particals)[i].pos.y - (*this->particals)[j].pos.y);
+                d2x[i] += a[i][j]*((this->particals)[i].pos.x - (this->particals)[j].pos.x);
+                d2y[i] += a[i][j]*((this->particals)[i].pos.y - (this->particals)[j].pos.y);
             }
         }
 
         // apply
         for(int i=0; i<len; i++) {
-            (*this->particals)[i].d.x += d2x[i]*time;
-            (*this->particals)[i].d.y += d2y[i]*time;
+            (this->particals)[i].d.x += d2x[i]*time;
+            (this->particals)[i].d.y += d2y[i]*time;
         }
     }
 
     void updatePos(double time) {
-        for(Partical it : *this->particals) {
+        for(Partical it : this->particals) {
             it.pos.x += it.d.x*time;
             it.pos.y += it.d.y*time;
         }

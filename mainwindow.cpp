@@ -1,13 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "visualizationdlg.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    this->setFixedSize(600,450);
+    this->setFixedSize(600,500);
 
     // attributes
     ui->particalsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -49,4 +51,11 @@ void MainWindow::on_addBtn_clicked()
     ui->yInput->setValue(.0);
     ui->dxInput->setValue(.0);
     ui->dyInput->setValue(.0);
+}
+
+void MainWindow::on_startBtn_clicked()
+{
+   if(this->data->getLen()==0)return;
+   VisualizationDlg vis(nullptr, this->data);
+   vis.exec();
 }

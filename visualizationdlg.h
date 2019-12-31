@@ -23,11 +23,11 @@ public:
 
 private slots:
     void on_GInput_editingFinished();
-
     void on_updateSpdInput_editingFinished();
 
 private:
     Ui::VisualizationDlg *ui;
+    VisGLWidget *visualizationGL;
 };
 
 #endif // VISUALIZATIONDLG_H

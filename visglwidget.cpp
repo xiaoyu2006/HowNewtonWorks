@@ -10,8 +10,8 @@ int randInt(int from, int to) {
 VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data)
     : QOpenGLWidget(parent)
 {
-    if(data == nullptr)return;
-    srand(time(NULL));
+    if(data == nullptr)throw;
+    srand(time(nullptr));
     this->data = data;
     const int len = this->data->getLen();
     for(int _=0; _<len; _++) {
@@ -24,7 +24,7 @@ VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data)
 void VisGLWidget::setData(NewtonSpace *data)
 {
     this->data = data;
-    if(data == nullptr)return;
+    if(data == nullptr)throw;
 
     srand(time(NULL));
     this->data = data;

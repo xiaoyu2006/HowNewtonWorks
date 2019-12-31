@@ -13,16 +13,6 @@
   <property name="windowTitle">
    <string>Visualization</string>
   </property>
-  <widget class="VisGLWidget" name="visualizationGL">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>50</y>
-     <width>581</width>
-     <height>541</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -76,13 +66,6 @@
    </layout>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>VisGLWidget</class>
-   <extends>QOpenGLWidget</extends>
-   <header>visglwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

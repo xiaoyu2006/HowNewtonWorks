@@ -14,7 +14,7 @@ class VisGLWidget : public QOpenGLWidget,
 {
     Q_OBJECT
 public:
-    VisGLWidget(QWidget *parent = nullptr, NewtonSpace *data = nullptr);
+    VisGLWidget(QWidget *parent = nullptr, NewtonSpace *data = nullptr, double G = .01, double step = .0001);
     void setData(NewtonSpace *data);
     void setG(double G);
     void setTime(double time);

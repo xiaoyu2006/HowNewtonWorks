@@ -7,10 +7,12 @@ int randInt(int from, int to) {
     return from+rand()%(from-to);
 }
 
-VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data)
+VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data, double G, double step)
     : QOpenGLWidget(parent)
 {
     if(data == nullptr)throw;
+    this->G = G;
+    this->step = step;
     srand(time(nullptr));
     this->data = data;
     const int len = this->data->getLen();

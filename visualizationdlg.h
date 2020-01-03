@@ -2,6 +2,7 @@
 #define VISUALIZATIONDLG_H
 
 #include <QDialog>
+#include <QTimerEvent>
 
 #include "NewtonSpace.cpp"
 
@@ -21,13 +22,14 @@ public:
 
     NewtonSpace *data;
 
-private slots:
-    void on_GInput_editingFinished();
-    void on_updateSpdInput_editingFinished();
+protected:
+    void timerEvent(QTimerEvent *event);
 
 private:
     Ui::VisualizationDlg *ui;
     VisGLWidget *visualizationGL;
+
+    int rePaintTimer;
 };
 
 #endif // VISUALIZATIONDLG_H

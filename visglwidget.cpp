@@ -7,12 +7,11 @@ int randInt(int from, int to) {
     return from+rand()%(from-to);
 }
 
-VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data, double G, double step)
+VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data)
     : QOpenGLWidget(parent)
 {
     if(data == nullptr)throw;
-    this->G = G;
-    this->step = step;
+
     srand(time(nullptr));
     this->data = data;
     const int len = this->data->getLen();
@@ -21,38 +20,6 @@ VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data, double G, double st
             randInt(0,200), randInt(0,200), randInt(0,200), randInt(200,255)
         ));
     }
-}
-
-void VisGLWidget::setData(NewtonSpace *data)
-{
-    this->data = data;
-    if(data == nullptr)throw;
-
-    srand(time(NULL));
-    this->data = data;
-    const int len = this->data->getLen();
-    this->colors.clear();
-    for(int _=0; _<len; _++) {
-        this->colors.push_back(QColor(
-            randInt(0,200), randInt(0,200), randInt(0,200), randInt(200,255)
-        ));
-    }
-}
-
-void VisGLWidget::setG(double G)
-{
-    this->G = G;
-}
-
-void VisGLWidget::setTime(double time)
-{
-    this->step = time;
-}
-
-void VisGLWidget::update()
-{
-    this->initializeGL();
-    this->paintGL();
 }
 
 void VisGLWidget::initializeGL()
@@ -69,8 +36,6 @@ void VisGLWidget::resizeGL(int width, int height)
 
 void VisGLWidget::paintGL()
 {
-    this->data->update(this->G, this->step);
-
     const int len = this->data->getLen();
 
     QPainter painter;

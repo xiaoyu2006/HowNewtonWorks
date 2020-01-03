@@ -6,10 +6,13 @@ VisualizationDlg::VisualizationDlg(QWidget *parent, NewtonSpace *data) :
     ui(new Ui::VisualizationDlg)
 {
     ui->setupUi(this);
+
     this->data = data;
     this->visualizationGL = new VisGLWidget(this, this->data);
     this->visualizationGL->setObjectName(QString::fromUtf8("visualizationGL"));
     this->visualizationGL->setGeometry(QRect(10, 50, 581, 541));
+
+    this->rePaintTimer = startTimer(1);
 }
 
 VisualizationDlg::~VisualizationDlg()
@@ -17,12 +20,12 @@ VisualizationDlg::~VisualizationDlg()
     delete ui;
 }
 
-void VisualizationDlg::on_GInput_editingFinished()
+void VisualizationDlg::timerEvent(QTimerEvent *event)
 {
-    this->visualizationGL->setG(ui->GInput->value());
-}
+    if(event->timerId() == this->rePaintTimer) {
+        this->data->update(ui->GInput->value(), ui->updateSpdInput->value());
+        this->visualizationGL->update();
 
-void VisualizationDlg::on_updateSpdInput_editingFinished()
-{
-    this->visualizationGL->setTime(ui->updateSpdInput->value());
+        this->rePaintTimer = startTimer(1);
+    }
 }

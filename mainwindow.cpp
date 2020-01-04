@@ -55,7 +55,17 @@ void MainWindow::on_addBtn_clicked()
 
 void MainWindow::on_startBtn_clicked()
 {
-   if(this->data->getLen()==0)return;
+   const int len = this->data->getLen();
+   if(len == 0)return;
    VisualizationDlg vis(nullptr, this->data);
    vis.exec();
+   int i = 0;
+   for(Partical prt : this->data->particals) {
+       ui->particalsTable->setItem(i,0,new QTableWidgetItem(QString::number(prt.mass)));
+       ui->particalsTable->setItem(i,1,new QTableWidgetItem(QString::number(prt.pos.x)));
+       ui->particalsTable->setItem(i,2,new QTableWidgetItem(QString::number(prt.pos.y)));
+       ui->particalsTable->setItem(i,3,new QTableWidgetItem(QString::number(prt.d.x)));
+       ui->particalsTable->setItem(i,4,new QTableWidgetItem(QString::number(prt.d.y)));
+       i++;
+   }
 }

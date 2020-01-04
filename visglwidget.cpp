@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include <QDebug>
+
 int randInt(int from, int to) {
     return from+rand()%(from-to);
 }
@@ -30,13 +32,13 @@ void VisGLWidget::initializeGL()
 
 void VisGLWidget::resizeGL(int width, int height)
 {
-    // won't be resized
+    this->paintGL();
     return;
 }
 
 void VisGLWidget::paintGL()
 {
-    const int len = this->data->getLen();
+    int len = this->data->getLen();
 
     QPainter painter;
     painter.begin(this);
@@ -47,6 +49,7 @@ void VisGLWidget::paintGL()
         painter.setPen(QPen(color, 20));
         painter.setBrush(QBrush(color));
         painter.drawPoint(pos.x, pos.y);
+        qDebug() << "Paint " << pos.x << " " << pos.y;
     }
 
     painter.end();

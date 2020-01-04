@@ -93,7 +93,7 @@ private:
         for(int i=0; i<len; i++) {
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
-                a[i][j] = G*(this->particals)[i].mass/dist[i][j];
+                a[i][j] = G*(this->particals)[i].mass/pow(((dist[i][j]<.0001)?.0001:dist[i][j]),2);
             }
         }
 

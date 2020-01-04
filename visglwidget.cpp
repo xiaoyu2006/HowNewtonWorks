@@ -17,7 +17,7 @@ VisGLWidget::VisGLWidget(QWidget *parent, NewtonSpace *data)
     const int len = this->data->getLen();
     for(int _=0; _<len; _++) {
         this->colors.push_back(QColor(
-            randInt(0,200), randInt(0,200), randInt(0,200), randInt(200,255)
+            randInt(0,150), randInt(0,150), randInt(0,150), 100
         ));
     }
 }
@@ -43,8 +43,9 @@ void VisGLWidget::paintGL()
 
     for (int i=0; i<len; i++) {
         Point pos = (this->data->particals)[i].pos;
+        double mass = (this->data->particals)[i].mass;
         QColor color = (this->colors)[i];
-        painter.setPen(QPen(color, 20));
+        painter.setPen(QPen(color, 5*mass+15));
         painter.setBrush(QBrush(color));
         painter.drawPoint(pos.x, pos.y);
     }

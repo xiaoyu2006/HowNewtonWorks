@@ -3,8 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include <QDebug>
-
 int randInt(int from, int to) {
     return from+rand()%(from-to);
 }
@@ -49,7 +47,6 @@ void VisGLWidget::paintGL()
         painter.setPen(QPen(color, 20));
         painter.setBrush(QBrush(color));
         painter.drawPoint(pos.x, pos.y);
-        qDebug() << "Paint " << pos.x << " " << pos.y;
     }
 
     painter.end();

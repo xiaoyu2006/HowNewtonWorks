@@ -108,8 +108,8 @@ private:
 
         // apply
         for(int i=0; i<len; i++) {
-            (this->particals)[i].d.x += d2x[i]*time;
-            (this->particals)[i].d.y += d2y[i]*time;
+            (this->particals)[i].d.x -= d2x[i]*time;
+            (this->particals)[i].d.y -= d2y[i]*time;
         }
     }
 

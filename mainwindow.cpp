@@ -47,8 +47,8 @@ void MainWindow::on_addBtn_clicked()
     ui->particalsTable->setItem(this->data->getLen()-1,4,new QTableWidgetItem(QString::number(d.y)));
     // Set to 0
     ui->massInput->setValue(1.0);
-    ui->xInput->setValue(.0);
-    ui->yInput->setValue(.0);
+    ui->xInput->setValue(250.0);
+    ui->yInput->setValue(250.0);
     ui->dxInput->setValue(.0);
     ui->dyInput->setValue(.0);
 }

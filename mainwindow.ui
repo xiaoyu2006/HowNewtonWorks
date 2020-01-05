@@ -88,6 +88,9 @@
          <property name="singleStep">
           <double>0.100000000000000</double>
          </property>
+         <property name="value">
+          <double>250.000000000000000</double>
+         </property>
         </widget>
        </item>
        <item>
@@ -110,6 +113,9 @@
          </property>
          <property name="singleStep">
           <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>250.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -216,6 +222,16 @@
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>massInput</tabstop>
+  <tabstop>xInput</tabstop>
+  <tabstop>yInput</tabstop>
+  <tabstop>dxInput</tabstop>
+  <tabstop>dyInput</tabstop>
+  <tabstop>addBtn</tabstop>
+  <tabstop>startBtn</tabstop>
+  <tabstop>particalsTable</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

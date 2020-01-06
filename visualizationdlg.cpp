@@ -27,7 +27,5 @@ void VisualizationDlg::timerEvent(QTimerEvent *event)
     if(event->timerId() == this->rePaintTimer) {
         this->data->update(ui->GInput->value(), ui->updateSpdInput->value());
         this->visualizationGL->repaint();
-
-        this->rePaintTimer = startTimer(1);
     }
 }

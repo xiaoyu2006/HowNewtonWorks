@@ -19,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // setup table header
     QStringList tableHeader;
-    tableHeader << tr("Mass") << tr("x") << tr("y") << tr("dx") << tr("dy");
-    ui->particalsTable->setColumnCount(5);
+    tableHeader << tr("Mass") << tr("Radius") << tr("x") << tr("y") << tr("dx") << tr("dy");
+    ui->particalsTable->setColumnCount(6);
     ui->particalsTable->setHorizontalHeaderLabels(tableHeader);
 }
 
@@ -34,19 +34,22 @@ void MainWindow::on_addBtn_clicked()
 {
     // Get the results
     double mass = ui->massInput->value();
+    double r = ui->rInput->value();
     Point pos(ui->xInput->value(), ui->yInput->value());
     Point d(ui->dxInput->value(), ui->dyInput->value());
     // Add to the list
-    this->data->addPartical(Partical(mass,pos,d));
+    this->data->addPartical(Partical(mass, r, pos, d));
     // Show in the table
     ui->particalsTable->setRowCount(this->data->getLen());
     ui->particalsTable->setItem(this->data->getLen()-1,0,new QTableWidgetItem(QString::number(mass)));
-    ui->particalsTable->setItem(this->data->getLen()-1,1,new QTableWidgetItem(QString::number(pos.x)));
-    ui->particalsTable->setItem(this->data->getLen()-1,2,new QTableWidgetItem(QString::number(pos.y)));
-    ui->particalsTable->setItem(this->data->getLen()-1,3,new QTableWidgetItem(QString::number(d.x)));
-    ui->particalsTable->setItem(this->data->getLen()-1,4,new QTableWidgetItem(QString::number(d.y)));
+    ui->particalsTable->setItem(this->data->getLen()-1,1,new QTableWidgetItem(QString::number(r)));
+    ui->particalsTable->setItem(this->data->getLen()-1,2,new QTableWidgetItem(QString::number(pos.x)));
+    ui->particalsTable->setItem(this->data->getLen()-1,3,new QTableWidgetItem(QString::number(pos.y)));
+    ui->particalsTable->setItem(this->data->getLen()-1,4,new QTableWidgetItem(QString::number(d.x)));
+    ui->particalsTable->setItem(this->data->getLen()-1,5,new QTableWidgetItem(QString::number(d.y)));
     // Set to 0
     ui->massInput->setValue(1.0);
+    ui->rInput->setValue(10.0);
     ui->xInput->setValue(250.0);
     ui->yInput->setValue(250.0);
     ui->dxInput->setValue(.0);
@@ -62,10 +65,16 @@ void MainWindow::on_startBtn_clicked()
    int i = 0;
    for(Partical prt : this->data->particals) {
        ui->particalsTable->setItem(i,0,new QTableWidgetItem(QString::number(prt.mass)));
-       ui->particalsTable->setItem(i,1,new QTableWidgetItem(QString::number(prt.pos.x)));
-       ui->particalsTable->setItem(i,2,new QTableWidgetItem(QString::number(prt.pos.y)));
-       ui->particalsTable->setItem(i,3,new QTableWidgetItem(QString::number(prt.d.x)));
-       ui->particalsTable->setItem(i,4,new QTableWidgetItem(QString::number(prt.d.y)));
+       ui->particalsTable->setItem(i,1,new QTableWidgetItem(QString::number(prt.r)));
+       ui->particalsTable->setItem(i,2,new QTableWidgetItem(QString::number(prt.pos.x)));
+       ui->particalsTable->setItem(i,3,new QTableWidgetItem(QString::number(prt.pos.y)));
+       ui->particalsTable->setItem(i,4,new QTableWidgetItem(QString::number(prt.d.x)));
+       ui->particalsTable->setItem(i,5,new QTableWidgetItem(QString::number(prt.d.y)));
        i++;
    }
+}
+
+void MainWindow::on_massInput_editingFinished()
+{
+    ui->rInput->setValue(ui->massInput->value()*2+8);
 }

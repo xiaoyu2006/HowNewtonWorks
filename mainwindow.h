@@ -22,6 +22,8 @@ private slots:
 
     void on_startBtn_clicked();
 
+    void on_massInput_editingFinished();
+
 private:
     Ui::MainWindow *ui;
 

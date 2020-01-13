@@ -7,6 +7,8 @@
 #include <cmath>
 // memset
 #include <cstring>
+// swap
+#include <algorithm>
 
 struct Point {
     double x, y;
@@ -19,14 +21,31 @@ struct Point {
         this->x = .0;
         this->y = .0;
     }
+
+    Point operator *(double c) {
+        return Point(this->x*c, this->y*c);
+    }
+
+    Point operator /(double c) {
+        return Point(this->x/c, this->y/c);
+    }
+
+    Point operator +(Point p2) {
+        return Point(this->x+p2.x, this->y+p2.y);
+    }
+
+    Point operator -(Point p2) {
+        return Point(this->x-p2.x, this->y-p2.y);
+    }
 };
 
 
 struct Partical {
-    double mass;
+    double mass, r;
     Point pos, d;
-    Partical(double mass, Point pos, Point d) {
+    Partical(double mass, double r, Point pos, Point d) {
         this->mass = mass;
+        this->r = r;
         this->pos = pos;
         this->d = d;
     }
@@ -51,8 +70,8 @@ public:
         return this->particals.size();
     }
 
-    void update(double G, double time) {
-        this->updateSpd(G, time);
+    void update(double G, double time, bool collide=false) {
+        this->updateSpd(G, time, collide);
         this->updatePos(time);
     }
 
@@ -60,9 +79,9 @@ public:
         return this->particals;
     }
 
-private:
+protected:
     // Main part!
-    void updateSpd(double G, double time) {
+    void updateSpd(double G, double time, bool collide) {
         const int len = this->getLen();
 
         // distances
@@ -109,6 +128,36 @@ private:
         for(int i=0; i<len; i++) {
             (this->particals)[i].d.x -= d2x[i]*time;
             (this->particals)[i].d.y -= d2y[i]*time;
+        }
+
+        if(!collide)return;
+        // handle collide
+        for(int i=0; i<len-1; i++) {
+            for(int j=i+1; j<len; j++) {
+                if(dist[i][j] < (this->particals)[i].r + (this->particals)[j].r) {
+                    Partical newi = (this->particals)[i];
+                    Partical newj = (this->particals)[j];
+
+                    newi.d = ((this->particals)[i].d*((this->particals)[i].mass-(this->particals)[j].mass)+(this->particals)[j].d*(2*(this->particals)[j].mass)) / ((this->particals)[i].mass+(this->particals)[j].mass);
+                    newj.d = ((this->particals)[j].d*((this->particals)[j].mass-(this->particals)[i].mass)+(this->particals)[i].d*(2*(this->particals)[i].mass)) / ((this->particals)[i].mass+(this->particals)[j].mass);
+
+                    (this->particals)[i] = newi;
+                    (this->particals)[j] = newj;
+
+                    // Some stupid hacks
+                    while(
+                        sqrt(
+                            pow(((this->particals)[i].pos.x - (this->particals)[j].pos.x),2.) +
+                            pow(((this->particals)[i].pos.y - (this->particals)[j].pos.y),2.)
+                        ) < (this->particals)[i].r + (this->particals)[j].r
+                    ) {
+                        (this->particals)[i].pos.x += (this->particals)[i].d.x*time;
+                        (this->particals)[i].pos.y += (this->particals)[i].d.y*time;
+
+                        (this->particals)[j].pos.x += (this->particals)[j].d.x*time;
+                        (this->particals)[j].pos.y += (this->particals)[j].d.y*time;}
+                }
+            }
         }
     }
 

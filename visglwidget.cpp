@@ -42,12 +42,13 @@ void VisGLWidget::paintGL()
     painter.begin(this);
 
     for (int i=0; i<len; i++) {
-        Point pos = (this->data->particals)[i].pos;
         double mass = (this->data->particals)[i].mass;
+        double r = (this->data->particals)[i].r;
+        Point pos = (this->data->particals)[i].pos;
         QColor color = (this->colors)[i];
-        painter.setPen(QPen(color, 5*mass+15));
+        painter.setPen(QPen(color, 1));
         painter.setBrush(QBrush(color));
-        painter.drawPoint(pos.x, pos.y);
+        painter.drawEllipse(QPointF(pos.x, pos.y), r, r);
     }
 
     painter.end();

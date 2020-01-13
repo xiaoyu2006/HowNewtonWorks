@@ -6,7 +6,7 @@ VisualizationDlg::VisualizationDlg(QWidget *parent, NewtonSpace *data) :
     ui(new Ui::VisualizationDlg)
 {
     ui->setupUi(this);
-    this->setFixedSize(600,600);
+    this->setFixedSize(600, 650);
 
     this->data = data;
     this->visualizationGL = new VisGLWidget(this, this->data);
@@ -25,7 +25,7 @@ VisualizationDlg::~VisualizationDlg()
 void VisualizationDlg::timerEvent(QTimerEvent *event)
 {
     if(event->timerId() == this->rePaintTimer) {
-        this->data->update(ui->GInput->value(), ui->updateSpdInput->value());
+        this->data->update(ui->GInput->value(), ui->updateSpdInput->value(), ui->collideBox->checkState());
         this->visualizationGL->repaint();
     }
 }

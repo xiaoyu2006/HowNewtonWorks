@@ -63,6 +63,29 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Radius:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="rInput">
+         <property name="decimals">
+          <number>5</number>
+         </property>
+         <property name="maximum">
+          <double>32768.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>10.000000000000000</double>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>
@@ -224,6 +247,7 @@
  </widget>
  <tabstops>
   <tabstop>massInput</tabstop>
+  <tabstop>rInput</tabstop>
   <tabstop>xInput</tabstop>
   <tabstop>yInput</tabstop>
   <tabstop>dxInput</tabstop>

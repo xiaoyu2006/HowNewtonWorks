@@ -7,8 +7,6 @@
 #include <cmath>
 // memset
 #include <cstring>
-// swap
-#include <algorithm>
 
 struct Point {
     double x, y;

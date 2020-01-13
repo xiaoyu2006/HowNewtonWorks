@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFixedSize(600,500);
 
     // attributes
-    ui->particalsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->particalsTable->setShowGrid(true);
     ui->particalsTable->horizontalHeader()->setVisible(true);
     ui->particalsTable->verticalHeader()->setVisible(true);
@@ -77,4 +76,45 @@ void MainWindow::on_startBtn_clicked()
 void MainWindow::on_massInput_editingFinished()
 {
     ui->rInput->setValue(ui->massInput->value()*2+8);
+}
+
+void MainWindow::on_particalsTable_cellEntered(int row, int column)
+{
+    QTableWidgetItem it = *(ui->particalsTable->item(row, column));
+
+    double reset;
+
+    switch (column) {
+    case 0:
+        (this->data->particals)[row].mass = reset = it.text().toDouble();
+        break;
+
+    case 1:
+        (this->data->particals)[row].r = reset = it.text().toDouble();
+        break;
+
+    case 2:
+        (this->data->particals)[row].pos.x = reset = it.text().toDouble();
+        break;
+
+    case 3:
+        (this->data->particals)[row].pos.y = reset = it.text().toDouble();
+        break;
+
+    case 4:
+        (this->data->particals)[row].d.x = reset = it.text().toDouble();
+        break;
+
+    case 5:
+        (this->data->particals)[row].d.y = reset = it.text().toDouble();
+        break;
+
+
+    default:
+        reset = -1;
+        break;
+    }
+
+
+    ui->particalsTable->setItem(row, column, new QTableWidgetItem(QString::number(reset)));
 }

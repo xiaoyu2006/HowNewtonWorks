@@ -78,6 +78,7 @@ public:
     }
 
 protected:
+
     // Main part!
     void updateSpd(double G, double time, bool collide) {
         const int len = this->getLen();
@@ -109,7 +110,7 @@ protected:
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
                 // cannot div by zero
-                a[i][j] = G*(this->particals)[i].mass/pow(((dist[i][j]<.0001)?.0001:dist[i][j]),2);
+                a[i][j] = G*(this->particals)[i].mass/pow(((dist[i][j]<.001)?.001:dist[i][j]),2);
             }
         }
 
@@ -149,6 +150,7 @@ protected:
                             pow(((this->particals)[i].pos.y - (this->particals)[j].pos.y),2.)
                         ) < (this->particals)[i].r + (this->particals)[j].r
                     ) {
+
                         (this->particals)[i].pos.x += (this->particals)[i].d.x*time;
                         (this->particals)[i].pos.y += (this->particals)[i].d.y*time;
 

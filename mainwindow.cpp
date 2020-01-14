@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setFixedSize(600,500);
 
+    ui->startBtn->setDisabled(true);
+
     // attributes
     ui->particalsTable->setShowGrid(true);
     ui->particalsTable->horizontalHeader()->setVisible(true);
@@ -31,6 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_addBtn_clicked()
 {
+    ui->startBtn->setDisabled(false);
     // Get the results
     double mass = ui->massInput->value();
     double r = ui->rInput->value();

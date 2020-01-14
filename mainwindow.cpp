@@ -81,43 +81,40 @@ void MainWindow::on_massInput_editingFinished()
     ui->rInput->setValue(ui->massInput->value()*2+8);
 }
 
-void MainWindow::on_particalsTable_cellEntered(int row, int column)
+void MainWindow::on_particalsTable_cellChanged(int row, int column)
 {
-    QTableWidgetItem it = *(ui->particalsTable->item(row, column));
-
-    double reset;
+    double it = ui->particalsTable->item(row, column)->text().toDouble();
 
     switch (column) {
     case 0:
-        (this->data->particals)[row].mass = reset = it.text().toDouble();
+        (this->data->particals)[row].mass = it;
         break;
 
     case 1:
-        (this->data->particals)[row].r = reset = it.text().toDouble();
+        (this->data->particals)[row].r = it;
         break;
 
     case 2:
-        (this->data->particals)[row].pos.x = reset = it.text().toDouble();
+        (this->data->particals)[row].pos.x = it;
         break;
 
     case 3:
-        (this->data->particals)[row].pos.y = reset = it.text().toDouble();
+        (this->data->particals)[row].pos.y = it;
         break;
 
     case 4:
-        (this->data->particals)[row].d.x = reset = it.text().toDouble();
+        (this->data->particals)[row].d.x = it;
         break;
 
     case 5:
-        (this->data->particals)[row].d.y = reset = it.text().toDouble();
+        (this->data->particals)[row].d.y = it;
         break;
 
 
     default:
-        reset = -1;
         break;
     }
 
 
-    ui->particalsTable->setItem(row, column, new QTableWidgetItem(QString::number(reset)));
+//    ui->particalsTable->setItem(row, column, new QTableWidgetItem(QString::number(it)));
 }

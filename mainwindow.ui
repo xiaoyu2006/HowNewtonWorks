@@ -29,7 +29,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Add a partical:</string>
+          <string>Add a particle:</string>
          </property>
         </widget>
        </item>
@@ -220,7 +220,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTableWidget" name="particalsTable">
+   <widget class="QTableWidget" name="particlesTable">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -257,7 +257,7 @@
   <tabstop>dyInput</tabstop>
   <tabstop>addBtn</tabstop>
   <tabstop>startBtn</tabstop>
-  <tabstop>particalsTable</tabstop>
+  <tabstop>particlesTable</tabstop>
  </tabstops>
  <resources/>
  <connections/>

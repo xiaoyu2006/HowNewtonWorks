@@ -24,7 +24,7 @@ private slots:
 
     void on_massInput_editingFinished();
 
-    void on_particalsTable_cellChanged(int row, int column);
+    void on_particlesTable_cellChanged(int row, int column);
 
 private:
     Ui::MainWindow *ui;

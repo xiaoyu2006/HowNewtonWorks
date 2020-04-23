@@ -14,15 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->startBtn->setDisabled(true);
 
     // attributes
-    ui->particalsTable->setShowGrid(true);
-    ui->particalsTable->horizontalHeader()->setVisible(true);
-    ui->particalsTable->verticalHeader()->setVisible(true);
+    ui->particlesTable->setShowGrid(true);
+    ui->particlesTable->horizontalHeader()->setVisible(true);
+    ui->particlesTable->verticalHeader()->setVisible(true);
 
     // setup table header
     QStringList tableHeader;
     tableHeader << tr("Mass") << tr("Radius") << tr("x") << tr("y") << tr("dx") << tr("dy");
-    ui->particalsTable->setColumnCount(6);
-    ui->particalsTable->setHorizontalHeaderLabels(tableHeader);
+    ui->particlesTable->setColumnCount(6);
+    ui->particlesTable->setHorizontalHeaderLabels(tableHeader);
 }
 
 MainWindow::~MainWindow()
@@ -40,15 +40,15 @@ void MainWindow::on_addBtn_clicked()
     Point pos(ui->xInput->value(), ui->yInput->value());
     Point d(ui->dxInput->value(), ui->dyInput->value());
     // Add to the list
-    this->data->addPartical(Partical(mass, r, pos, d));
+    this->data->addParticle(Particle(mass, r, pos, d));
     // Show in the table
-    ui->particalsTable->setRowCount(this->data->getLen());
-    ui->particalsTable->setItem(this->data->getLen()-1,0,new QTableWidgetItem(QString::number(mass)));
-    ui->particalsTable->setItem(this->data->getLen()-1,1,new QTableWidgetItem(QString::number(r)));
-    ui->particalsTable->setItem(this->data->getLen()-1,2,new QTableWidgetItem(QString::number(pos.x)));
-    ui->particalsTable->setItem(this->data->getLen()-1,3,new QTableWidgetItem(QString::number(pos.y)));
-    ui->particalsTable->setItem(this->data->getLen()-1,4,new QTableWidgetItem(QString::number(d.x)));
-    ui->particalsTable->setItem(this->data->getLen()-1,5,new QTableWidgetItem(QString::number(d.y)));
+    ui->particlesTable->setRowCount(this->data->getLen());
+    ui->particlesTable->setItem(this->data->getLen()-1,0,new QTableWidgetItem(QString::number(mass)));
+    ui->particlesTable->setItem(this->data->getLen()-1,1,new QTableWidgetItem(QString::number(r)));
+    ui->particlesTable->setItem(this->data->getLen()-1,2,new QTableWidgetItem(QString::number(pos.x)));
+    ui->particlesTable->setItem(this->data->getLen()-1,3,new QTableWidgetItem(QString::number(pos.y)));
+    ui->particlesTable->setItem(this->data->getLen()-1,4,new QTableWidgetItem(QString::number(d.x)));
+    ui->particlesTable->setItem(this->data->getLen()-1,5,new QTableWidgetItem(QString::number(d.y)));
     // Set to 0
     ui->massInput->setValue(1.0);
     ui->rInput->setValue(10.0);
@@ -65,13 +65,13 @@ void MainWindow::on_startBtn_clicked()
    VisualizationDlg vis(nullptr, this->data);
    vis.exec();
    int i = 0;
-   for(Partical prt : this->data->particals) {
-       ui->particalsTable->setItem(i,0,new QTableWidgetItem(QString::number(prt.mass)));
-       ui->particalsTable->setItem(i,1,new QTableWidgetItem(QString::number(prt.r)));
-       ui->particalsTable->setItem(i,2,new QTableWidgetItem(QString::number(prt.pos.x)));
-       ui->particalsTable->setItem(i,3,new QTableWidgetItem(QString::number(prt.pos.y)));
-       ui->particalsTable->setItem(i,4,new QTableWidgetItem(QString::number(prt.d.x)));
-       ui->particalsTable->setItem(i,5,new QTableWidgetItem(QString::number(prt.d.y)));
+   for(Particle prt : this->data->particles) {
+       ui->particlesTable->setItem(i,0,new QTableWidgetItem(QString::number(prt.mass)));
+       ui->particlesTable->setItem(i,1,new QTableWidgetItem(QString::number(prt.r)));
+       ui->particlesTable->setItem(i,2,new QTableWidgetItem(QString::number(prt.pos.x)));
+       ui->particlesTable->setItem(i,3,new QTableWidgetItem(QString::number(prt.pos.y)));
+       ui->particlesTable->setItem(i,4,new QTableWidgetItem(QString::number(prt.d.x)));
+       ui->particlesTable->setItem(i,5,new QTableWidgetItem(QString::number(prt.d.y)));
        i++;
    }
 }
@@ -81,33 +81,33 @@ void MainWindow::on_massInput_editingFinished()
     ui->rInput->setValue(ui->massInput->value()*2+8);
 }
 
-void MainWindow::on_particalsTable_cellChanged(int row, int column)
+void MainWindow::on_particlesTable_cellChanged(int row, int column)
 {
-    double it = ui->particalsTable->item(row, column)->text().toDouble();
+    double it = ui->particlesTable->item(row, column)->text().toDouble();
 
     switch (column) {
     case 0:
-        (this->data->particals)[row].mass = it;
+        (this->data->particles)[row].mass = it;
         break;
 
     case 1:
-        (this->data->particals)[row].r = it;
+        (this->data->particles)[row].r = it;
         break;
 
     case 2:
-        (this->data->particals)[row].pos.x = it;
+        (this->data->particles)[row].pos.x = it;
         break;
 
     case 3:
-        (this->data->particals)[row].pos.y = it;
+        (this->data->particles)[row].pos.y = it;
         break;
 
     case 4:
-        (this->data->particals)[row].d.x = it;
+        (this->data->particles)[row].d.x = it;
         break;
 
     case 5:
-        (this->data->particals)[row].d.y = it;
+        (this->data->particles)[row].d.y = it;
         break;
 
 
@@ -116,5 +116,5 @@ void MainWindow::on_particalsTable_cellChanged(int row, int column)
     }
 
 
-//    ui->particalsTable->setItem(row, column, new QTableWidgetItem(QString::number(it)));
+//    ui->particlesTable->setItem(row, column, new QTableWidgetItem(QString::number(it)));
 }

@@ -38,10 +38,10 @@ struct Point {
 };
 
 
-struct Partical {
+struct Particle {
     double mass, r;
     Point pos, d;
-    Partical(double mass, double r, Point pos, Point d) {
+    Particle(double mass, double r, Point pos, Point d) {
         this->mass = mass;
         this->r = r;
         this->pos = pos;
@@ -52,7 +52,7 @@ struct Partical {
 
 class NewtonSpace {
 public:
-    std::vector<Partical> particals;
+    std::vector<Particle> particles;
 
     NewtonSpace() {
     }
@@ -60,12 +60,12 @@ public:
     ~NewtonSpace() {
     }
 
-    void addPartical(Partical p) {
-        this->particals.push_back(p);
+    void addParticle(Particle p) {
+        this->particles.push_back(p);
     }
 
     int getLen() {
-        return this->particals.size();
+        return this->particles.size();
     }
 
     void update(double G, double time, bool collide=false) {
@@ -73,8 +73,8 @@ public:
         this->updatePos(time);
     }
 
-    std::vector<Partical> getParticals() {
-        return this->particals;
+    std::vector<Particle> getParticles() {
+        return this->particles;
     }
 
 protected:
@@ -99,8 +99,8 @@ protected:
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
                 dist[i][j] = sqrt(
-                    pow(((this->particals)[i].pos.x - (this->particals)[j].pos.x),2.) +
-                    pow(((this->particals)[i].pos.y - (this->particals)[j].pos.y),2.)
+                    pow(((this->particles)[i].pos.x - (this->particles)[j].pos.x),2.) +
+                    pow(((this->particles)[i].pos.y - (this->particles)[j].pos.y),2.)
                 );
             }
         }
@@ -110,7 +110,7 @@ protected:
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
                 // cannot div by zero
-                a[i][j] = G*(this->particals)[i].mass/pow(((dist[i][j]<.001)?.001:dist[i][j]),2);
+                a[i][j] = G*(this->particles)[i].mass/pow(((dist[i][j]<.001)?.001:dist[i][j]),2);
             }
         }
 
@@ -118,44 +118,44 @@ protected:
         for(int i=0; i<len; i++) {
             for(int j=0; j<len; j++) {
                 if(i==j)continue;
-                d2x[i] += a[i][j]*((this->particals)[i].pos.x - (this->particals)[j].pos.x);
-                d2y[i] += a[i][j]*((this->particals)[i].pos.y - (this->particals)[j].pos.y);
+                d2x[i] += a[i][j]*((this->particles)[i].pos.x - (this->particles)[j].pos.x);
+                d2y[i] += a[i][j]*((this->particles)[i].pos.y - (this->particles)[j].pos.y);
             }
         }
 
         // apply
         for(int i=0; i<len; i++) {
-            (this->particals)[i].d.x -= d2x[i]*time;
-            (this->particals)[i].d.y -= d2y[i]*time;
+            (this->particles)[i].d.x -= d2x[i]*time;
+            (this->particles)[i].d.y -= d2y[i]*time;
         }
 
         if(!collide)return;
         // handle collide
         for(int i=0; i<len-1; i++) {
             for(int j=i+1; j<len; j++) {
-                if(dist[i][j] < (this->particals)[i].r + (this->particals)[j].r) {
-                    Partical newi = (this->particals)[i];
-                    Partical newj = (this->particals)[j];
+                if(dist[i][j] < (this->particles)[i].r + (this->particles)[j].r) {
+                    Particle newi = (this->particles)[i];
+                    Particle newj = (this->particles)[j];
 
-                    newi.d = ((this->particals)[i].d*((this->particals)[i].mass-(this->particals)[j].mass)+(this->particals)[j].d*(2*(this->particals)[j].mass)) / ((this->particals)[i].mass+(this->particals)[j].mass);
-                    newj.d = ((this->particals)[j].d*((this->particals)[j].mass-(this->particals)[i].mass)+(this->particals)[i].d*(2*(this->particals)[i].mass)) / ((this->particals)[i].mass+(this->particals)[j].mass);
+                    newi.d = ((this->particles)[i].d*((this->particles)[i].mass-(this->particles)[j].mass)+(this->particles)[j].d*(2*(this->particles)[j].mass)) / ((this->particles)[i].mass+(this->particles)[j].mass);
+                    newj.d = ((this->particles)[j].d*((this->particles)[j].mass-(this->particles)[i].mass)+(this->particles)[i].d*(2*(this->particles)[i].mass)) / ((this->particles)[i].mass+(this->particles)[j].mass);
 
-                    (this->particals)[i] = newi;
-                    (this->particals)[j] = newj;
+                    (this->particles)[i] = newi;
+                    (this->particles)[j] = newj;
 
                     // Some stupid hacks
                     while(
                         sqrt(
-                            pow(((this->particals)[i].pos.x - (this->particals)[j].pos.x),2.) +
-                            pow(((this->particals)[i].pos.y - (this->particals)[j].pos.y),2.)
-                        ) < (this->particals)[i].r + (this->particals)[j].r
+                            pow(((this->particles)[i].pos.x - (this->particles)[j].pos.x),2.) +
+                            pow(((this->particles)[i].pos.y - (this->particles)[j].pos.y),2.)
+                        ) < (this->particles)[i].r + (this->particles)[j].r
                     ) {
 
-                        (this->particals)[i].pos.x += (this->particals)[i].d.x*time;
-                        (this->particals)[i].pos.y += (this->particals)[i].d.y*time;
+                        (this->particles)[i].pos.x += (this->particles)[i].d.x*time;
+                        (this->particles)[i].pos.y += (this->particles)[i].d.y*time;
 
-                        (this->particals)[j].pos.x += (this->particals)[j].d.x*time;
-                        (this->particals)[j].pos.y += (this->particals)[j].d.y*time;}
+                        (this->particles)[j].pos.x += (this->particles)[j].d.x*time;
+                        (this->particles)[j].pos.y += (this->particles)[j].d.y*time;}
                 }
             }
         }
@@ -165,8 +165,8 @@ protected:
         const int len = this->getLen();
 
         for(int i=0; i<len; i++) {
-            (this->particals)[i].pos.x += (this->particals)[i].d.x*time;
-            (this->particals)[i].pos.y += (this->particals)[i].d.y*time;
+            (this->particles)[i].pos.x += (this->particles)[i].d.x*time;
+            (this->particles)[i].pos.y += (this->particles)[i].d.y*time;
         }
     }
 };

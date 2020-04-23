@@ -42,9 +42,9 @@ void VisGLWidget::paintGL()
     painter.begin(this);
 
     for (int i=0; i<len; i++) {
-        double mass = (this->data->particals)[i].mass;
-        double r = (this->data->particals)[i].r;
-        Point pos = (this->data->particals)[i].pos;
+        double mass = (this->data->particles)[i].mass;
+        double r = (this->data->particles)[i].r;
+        Point pos = (this->data->particles)[i].pos;
         QColor color = (this->colors)[i];
         painter.setPen(QPen(color, 1));
         painter.setBrush(QBrush(color));
